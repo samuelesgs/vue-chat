@@ -7,12 +7,19 @@
       body_message : String,
       show_button_saved : Boolean
     }
-  )
+  );
 </script>
+
 <template>
   <!-- Button trigger modal -->
-  <button type="button" class="btn btn-primary"  id="button-open-modal" data-bs-toggle="modal" data-bs-target="#modalMessage" hidden>
-    Launch demo modal
+  <button
+    id="button-open-modal"
+    data-bs-toggle="modal"
+    data-bs-target="#modalMessage"
+    hidden
+    class="btn btn-primary"
+    type="button"
+    >
   </button>
 
   <!-- Modal -->

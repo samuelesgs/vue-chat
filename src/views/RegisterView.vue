@@ -1,24 +1,25 @@
 <script setup lang="ts">
     import AuthService from "@/services/Auth";
     import {ref} from "vue";
+    import ModalMessageView from "../components/modals/ModalMessageView.vue";
 
     const email = ref('');
     const password = ref('');
     const name = ref('');
 
-    const error : any = ref(null);
+    const modalTitle : any = ref(null);
+    const modalMessage : any = ref(null);
 
-    function verifyParams() {
-        error.value = null;
+    async function verifyParams() {
+        modalMessage.value = null;
         if (!email.value) {
-            error.value = "Ingresa un email";
+            setError("Validación formulario", "Ingresa un email");
         } else if (!password.value) {
-            error.value = "Ingresa la contraseña";
+            setError("Validación formulario", "Ingresa la contraseña");
         } else {
-            sendRequest();
+            sendRequest()
         }
     }
-
     
     function sendRequest() {
         AuthService.create(email.value, password.value, name.value).then(_ => {
@@ -26,6 +27,13 @@
         }, reject => {
             console.log(reject);
         });
+    }
+
+    function setError(title : string, error : string) {
+        modalTitle.value = title;
+        modalMessage.value = error;
+        document.getElementById('button-open-modal')!.click();
+        console.log(error);
     }
     
     function isLoggin() {
@@ -88,10 +96,13 @@
                                     >Crear cuenta
                                 </button>
                         </div>
+                        <ModalMessageView
+                            :title="modalTitle"
+                            :body_message="modalMessage"
+                            :show_button_saved="false"
+                            >
+                        </ModalMessageView>
                     </div>
-                </div>
-                <div class="alert alert-danger" role="alert" v-if="error">
-                    {{error}}
                 </div>
             </div>
         </div>

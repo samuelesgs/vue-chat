@@ -1,6 +1,6 @@
 <script setup lang="ts">
     import AuthService from "@/services/Auth";
-    import ModalMessageView from "./ModalMessageView.vue";
+    import ModalMessageView from "../components/modals/ModalMessageView.vue";
 
     import {ref} from "vue";
 
@@ -9,14 +9,13 @@
     const modalTitle : any = ref(null);
     const modalMessage : any = ref(null);
 
-    const error : any = ref(null);
 
     async function verifyParams() {
-        error.value = null;
+        modalMessage.value = null;
         if (!email.value) {
-            error.value = "Ingresa un email";
+            setError("Validación formulario", "Ingresa un email");
         } else if (!password.value) {
-            error.value = "Ingresa la contraseña";
+            setError("Validación formulario", "Ingresa la contraseña");
         } else {
             sendRequest()
         }
@@ -26,12 +25,12 @@
         AuthService.login(email.value, password.value).then(_ => {
             window.location.href = "Home";
         }, reject => {
-            setError(reject);
+            setError("Error server", reject);
         });
     }
 
-    function setError(error : string) {
-        modalTitle.value = "Error server";
+    function setError(title : string, error : string) {
+        modalTitle.value = title;
         modalMessage.value = error;
         document.getElementById('button-open-modal')!.click();
         console.log(error);
@@ -94,11 +93,6 @@
                     :show_button_saved="false"
                     >
                 </ModalMessageView>
-                <div class="row center-horizontal">
-                    <div class="col-4 alert alert-danger" role="alert" v-if="error">
-                        {{error}}
-                    </div>
-                </div>
             </div>
         </div>
     </div>
