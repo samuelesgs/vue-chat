@@ -1,6 +1,6 @@
 
 <script setup lang="ts">
-    import RowMessageView from './RowMessageView.vue';
+    import CardChatView from './CardChatView.vue';
     const user = getUser();
 
     defineProps(
@@ -39,11 +39,10 @@
         
         <div class="one-colum mt-2">
             <div class="col-12 ps-2" v-for="row in array">
-                <row-message-view
+                <card-chat-view
                     :row="row"
                     >
-                </row-message-view>
-
+                </card-chat-view>
             </div>
         </div>
     </div>

@@ -15,12 +15,17 @@
 
 .center-vertical {
   display: flex;
-  justify-content: center;
+  align-items: center;
 }
 
 .flex-start {
   display: flex;
   justify-content: flex-start;
+}
+
+.flex-end {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .white-text {

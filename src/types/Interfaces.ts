@@ -11,3 +11,15 @@ export default interface User {
     updatedAt: Date;
     __v:       number;
 };
+
+export default interface ResponseData {
+  data: any;
+}
+
+export interface Chats  {
+    message : string;
+    property : boolean;
+    date : string;
+    user_send : string;
+    user_to : string;
+};
