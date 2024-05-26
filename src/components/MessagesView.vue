@@ -10,6 +10,17 @@
 
 <template>
     <div class="row container-message-size overflow-auto">
+        <div class="row white-text center-vertical">
+            <div class="col-9">
+                <h1>Nombre del chat</h1>
+            </div>
+            <div class="col">
+                <div class="row">
+                    <button class="btn btn-danger me-2 col">Bloquear</button>
+                    <button class="btn btn-secondary me-2 col white-text">Eliminar</button>
+                </div>
+            </div>
+        </div>
         <row-message-view
             v-for="row in props.messages"
             :property="row.property"

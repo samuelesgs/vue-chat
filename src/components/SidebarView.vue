@@ -1,30 +1,52 @@
 
 <script setup lang="ts">
-    import CardChatView from './CardChatView.vue';
+    import { ref } from 'vue';
+import CardChatView from './CardChatView.vue';
     const user = getUser();
+
 
     defineProps(
         { array : [Number]}
     );
 
+    const isSectionProfile = ref(false);
+
+    const emit = defineEmits(['isSectionProfile','selectionChat']);
+
+    function selectionProfile() {
+        isSectionProfile.value = !isSectionProfile.value;
+        emit('isSectionProfile', isSectionProfile.value)
+    }
+
+    function selectionChat(row : any) {
+        emit('selectionChat', row)
+    }
+
     function getUser() {
         const data = JSON.parse(localStorage.getItem('user_session')!)
         return data['name'] ?? data['email'];
     }
+
 </script>
 
 <template>
-    <div class="col-3 side-bar-size overflow-auto-vertical">
-        <div class="row">
+    <div class="col-3 side-bar-size">
+        <div class="row no-space">
             <div class="col-12 overflow-hidden header-style">
                 <div class="row mt-2 ps-3 pe-2">
                     <h3 class="col-4 white-text">Chat</h3>
-                    <div class="col-8 position-settings pe-3">
+                    <div class="offset-5 col">
+                        <div class="col-12 position-settings dropdown-toggle pe-3" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
                         <!-- obtener foto y replazarla -->
-                        <img
-                            src="@/assets/images/settings.png"
-                            class="img-icon-settings text-end"
-                            />
+                            <img
+                                src="@/assets/images/settings.png"
+                                class="img-icon-settings text-end"
+                                />
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <li @click="selectionProfile"><p class="dropdown-item">Perfil</p></li>
+                                    <li @click=""><p class="dropdown-item">Cerrar sesion</p></li>
+                                </ul>
+                        </div>
                     </div>
                 </div>
                 <div class="col-12 text-center">
@@ -37,12 +59,22 @@
             </div>        
         </div>
         
-        <div class="one-colum mt-2">
-            <div class="col-12 ps-2" v-for="row in array">
-                <card-chat-view
-                    :row="row"
+        <div
+            class="one-colum mt-2 overflow-auto-vertical messages-size"
+            >
+            <div
+                class="col-12 ps-2"
+                v-for="row in array"
+                >
+                <div
+                    @click="selectionChat(row)"
+                    class="col-12"
                     >
-                </card-chat-view>
+                    <card-chat-view
+                        :row="row"
+                        >
+                    </card-chat-view>
+                </div>
             </div>
         </div>
     </div>
@@ -52,6 +84,11 @@
     .img-icon-settings{
         height: 4vh;
         width: 4vh;
+    }
+
+    .messages-size {
+        min-height: 60vh;
+        max-height: 74vh;
     }
 
     .header-style {

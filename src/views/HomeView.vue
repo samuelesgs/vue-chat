@@ -3,6 +3,7 @@
     
     import MessagesView from '@/components/MessagesView.vue'
     import SideBarView from '@/components/SidebarView.vue'
+    import ProfileView from '@/views/ProfileView.vue'
     import type { Chats } from '@/types/Interfaces';
     
     const array : any = [
@@ -135,6 +136,22 @@
         }
     }
 
+    const isSelectionProfile = ref(false);
+
+    const chatSelection = ref();
+
+    const setSelectionProfile = (selection: boolean) => {
+        console.log('Message clicked:', selection);
+        isSelectionProfile.value = selection;
+    // Lógica adicional para manejar el evento de clic en el mensaje
+    };
+
+    const setSelectionChat = (chat : any) => {
+        isSelectionProfile.value = false;
+        chatSelection.value = chat
+        //chatSelection enviar los mensajes del chat seleccionado
+    }
+
     isLoggin();
 </script>
 
@@ -144,15 +161,21 @@
             <side-bar-view
                 :array="array"
                 class="bg-font no-space col-3"
+                @is-section-profile="setSelectionProfile"
+                @selection-chat="setSelectionChat"
                 >
             </side-bar-view>
             <div class="col center-horizontal">
                 <div class="bg-container col-11 p-3">
                     <messages-view
+                        v-if="!isSelectionProfile"
                         :messages="messages"
                         >
                     </messages-view>
-                    <div class="row">
+                    <div
+                        class="row" 
+                        v-if="!isSelectionProfile"
+                        >
                         <div class="col flex-end  no-space">
                             <img
                                 class="mt-3 size-img-send p-1 me-2"
@@ -174,6 +197,9 @@
                                     />                            
                         </div>
                     </div>
+                    <profile-view v-if="isSelectionProfile">
+                        
+                    </profile-view>
                     <!-- <h1>HOME</h1>
                     <button @click="closeSession">Close session</button> -->
                 </div>
