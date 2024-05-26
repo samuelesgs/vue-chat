@@ -5,13 +5,17 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: var(--backgroundColor);
 }
 
 .center-horizontal {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.center-vertical {
+  display: flex;
+  justify-content: center;
 }
 
 .flex-start {
@@ -40,4 +44,9 @@
   background-color: transparent;
   color: white; /* Asegúrate de que el color del texto no cambie al enfocar */
   border: 1px solid #ced4da; /* Ajuste opcional para el borde en foco */
+}
+
+.no-space {
+  margin: 0px;
+  padding: 0px;
 }

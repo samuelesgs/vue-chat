@@ -23,7 +23,7 @@
     
     function sendRequest() {
         AuthService.create(email.value, password.value, name.value).then(_ => {
-            window.location.href = "login";
+            window.location.href = "/";
         }, reject => {
             console.log(reject);
         });
