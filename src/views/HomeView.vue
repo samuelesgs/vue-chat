@@ -1,9 +1,111 @@
 <script setup  lang="ts">
+    import { ref } from 'vue';
+    
     import MessagesView from '@/components/MessagesView.vue'
     import SideBarView from '@/components/SidebarView.vue'
-    const array : Number[] = [
+    import type { Chats } from '@/types/Interfaces';
+    
+    const array : any = [
         0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,30,31,32
     ];
+
+    
+    const messages = ref([
+        {
+            message : "Hola",
+            property : true,
+            date : "2024-05-03 19:11:14",
+            user_send : "samuelesgs04@gmail.com",
+            user_to : "la_chiquilla@gmail.com"
+        },{
+            message : "Hola",
+            property : false,
+            date : "2024-05-03 19:11:30",
+            user_send : "la_chiquilla@gmail.com",
+            user_to : "samuelesgs04@gmail.com"
+        },
+        {
+            message : "Como estas",
+            property : true,
+            date : "2024-05-03 19:13:01",
+            user_send : "samuelesgs04@gmail.com",
+            user_to : "la_chiquilla@gmail.com"
+        },
+        {
+            message : "Espero te encuentres bien",
+            property : true,
+            date : "2024-05-03 19:13:10",
+            user_send : "samuelesgs04@gmail.com",
+            user_to : "la_chiquilla@gmail.com"
+        },
+        {
+            message : "Dejame de molestar",
+            property : false,
+            date : "2024-05-03 19:13:01",
+            user_send : "la_chiquilla@gmail.com",
+            user_to : "samuelesgs04@gmail.com"
+        },
+        {
+            message : "Tu no eres el de mana",
+            property : false,
+            date : "2024-05-03 19:13:11",
+            user_send : "la_chiquilla@gmail.com",
+            user_to : "samuelesgs04@gmail.com"
+        },
+        {
+            message : "Tu no eres el de mana",
+            property : false,
+            date : "2024-05-03 19:13:11",
+            user_send : "la_chiquilla@gmail.com",
+            user_to : "samuelesgs04@gmail.com"
+        },
+        {
+            message : "Tu no eres el de mana",
+            property : false,
+            date : "2024-05-03 19:13:11",
+            user_send : "la_chiquilla@gmail.com",
+            user_to : "samuelesgs04@gmail.com"
+        },
+        {
+            message : "Tu no eres el de mana",
+            property : false,
+            date : "2024-05-03 19:13:11",
+            user_send : "la_chiquilla@gmail.com",
+            user_to : "samuelesgs04@gmail.com"
+        },{
+            message : "Tu no eres el de mana",
+            property : false,
+            date : "2024-05-03 19:13:11",
+            user_send : "la_chiquilla@gmail.com",
+            user_to : "samuelesgs04@gmail.com"
+        },{
+            message : "Tu no eres el de mana",
+            property : false,
+            date : "2024-05-03 19:13:11",
+            user_send : "la_chiquilla@gmail.com",
+            user_to : "samuelesgs04@gmail.com"
+        },{
+            message : "Tu no eres el de mana",
+            property : false,
+            date : "2024-05-03 19:13:11",
+            user_send : "la_chiquilla@gmail.com",
+            user_to : "samuelesgs04@gmail.com"
+        },{
+            message : "Tu no eres el de mana",
+            property : false,
+            date : "2024-05-03 19:13:11",
+            user_send : "la_chiquilla@gmail.com",
+            user_to : "samuelesgs04@gmail.com"
+        },{
+            message : "Tu no eres el de mana",
+            property : false,
+            date : "2024-05-03 19:13:11",
+            user_send : "la_chiquilla@gmail.com",
+            user_to : "samuelesgs04@gmail.com"
+        },
+    ]);
+
+    let message = ref(null)
     
     function closeSession() {
         window.location.href = "/";
@@ -14,6 +116,22 @@
         const email = localStorage.getItem('email');
         if (email == null) {
             window.location.href = "/";
+        }
+    }
+
+    function verifyParams() {
+        if (!message.value) {
+            console.log("not send");
+            
+        } else {
+            const chatMessage :Chats = {
+                message : message.value,
+                property : true,
+                date : "2024-05-26 13:10:15",
+                user_send : localStorage.getItem('email')!,
+                user_to : "la_chiquilla@gmail.com",
+            }
+            messages.value.push(chatMessage);
         }
     }
 
@@ -30,19 +148,30 @@
             </side-bar-view>
             <div class="col center-horizontal">
                 <div class="bg-container col-11 p-3">
-                    <messages-view></messages-view>
+                    <messages-view
+                        :messages="messages"
+                        >
+                    </messages-view>
                     <div class="row">
-                        <div class="col-11">
+                        <div class="col flex-end  no-space">
+                            <img
+                                class="mt-3 size-img-send p-1 me-2"
+                                src="@/assets/images/file.png"
+                                />
+                        </div>
+                        <div class="col-10 no-space">
                             <input
-                                class="form-control mt-3 input-text-style"
+                                class="form-control mt-3 input-text-style no-space p-2"
+                                v-model="message"
                                 type="text"
                                 />
                         </div>
-                        <div class="col center-vertical">
-                            <img
-                                class="mt-3 size-img-send p-1"
-                                src="@/assets/images/send.png"
-                                />
+                        <div class="col center-vertical no-space">
+                                <img
+                                    @click="verifyParams"
+                                    class="mt-3 size-img-send p-1 ms-2"
+                                    src="@/assets/images/send.png"
+                                    />                            
                         </div>
                     </div>
                     <!-- <h1>HOME</h1>
