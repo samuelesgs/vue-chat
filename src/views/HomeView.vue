@@ -5,13 +5,21 @@
     import SideBarView from '@/components/SidebarView.vue'
     import ProfileView from '@/views/ProfileView.vue'
     import MessagesService from '@/services/Messages';
-    import type { DataMessages, Message } from "@/types/Interfaces";
+    import type { DataMessages, Message, ResponseMessage, SendMessage } from "@/types/Interfaces";
 
-    const chats : Ref<DataMessages[] | null> = ref([])
-    
-  /*   const array : any = [
-        0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,30,31,32
-    ]; */
+    import { sendMessage, socket } from "@/socket";
+
+    socket.connect();
+
+    const chats : Ref<DataMessages[] | null> = ref([]);
+
+    const email = localStorage.getItem('email');
+
+    let message = ref('');
+
+    const isSelectionProfile = ref(false);
+
+    const chatSelection : Ref<DataMessages | null> = ref(null);
 
     function syncMessage() {
         MessagesService.sync().then(_ => {
@@ -20,28 +28,53 @@
             console.log(reject);
         });
     }
-    
-    let message = ref('');
 
     function isLoggin() {
-        const email = localStorage.getItem('email');
         if (email == null) {
             window.location.href = "/";
         }
     }
 
-    function verifyParams() {
+    function verifyParams(type : string) {
         if (!message.value) {
             console.log("not send");
-            
         } else {
+            if (type == "message") {
+                const params : SendMessage = {
+                    content : message.value,
+                    type : type,
+                    send_by : email!,
+                    send_to : chatSelection.value!.another_email,
+                }
+                sendMessage(params);
+            }
+            
             /* messages.value.push(chatMessage); */
         }
     }
 
-    const isSelectionProfile = ref(false);
+    socket.on('message', (response : ResponseMessage) => {
+        pushInformation(response.data)
+    });
 
-    const chatSelection : Ref<DataMessages | null> = ref(null);
+    function pushInformation(data : Message) {
+        const checkChats = chats.value!.find(row => row.another_email == data.send_by || row.another_email == data.send_to);
+        if (checkChats) {
+            checkChats.messages.push(data);
+        } else {
+            const chat : DataMessages = {
+                another_email : email == data.send_by ? data.send_to : data.send_by,
+                another_img : null,
+                my_email : email == data.send_by ? data.send_by : data.send_to,
+                messages : [data] 
+            };
+            if (chats.value) {
+                chats.value.push(chat);
+            } else {
+                chats.value = [chat];
+            }
+        }
+    }
 
     // Lógica adicional para manejar el evento de clic en el mensaje
     const setSelectionProfile = (selection: boolean) => {
@@ -55,6 +88,7 @@
         isSelectionProfile.value = false;
         chatSelection.value = chat
     }
+    
     syncMessage();
     isLoggin();
 </script>
@@ -95,7 +129,7 @@
                         </div>
                         <div class="col center-vertical no-space">
                             <img
-                                @click="verifyParams"
+                                @click="verifyParams('message')"
                                 class="mt-3 size-img-send p-1 ms-2"
                                 src="@/assets/images/send.png"
                                 />                            

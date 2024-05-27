@@ -12,25 +12,6 @@ export default interface User {
     __v:       number;
 };
 
-export default interface ResponseData {
-  data: any;
-}
-
-export interface Chats  {
-    message : string;
-    property : boolean;
-    date : string;
-    user_send : string;
-    user_to : string;
-};
-
-export interface DataMessages {
-    another_email: string;
-    another_img:   null;
-    my_email:      string;
-    messages:      Message[];
-}
-
 export interface Message {
     _id:       string;
     content:   string;
@@ -44,4 +25,24 @@ export interface Message {
     createdAt: Date;
     updatedAt: Date;
     __v:       number;
+}
+
+export interface DataMessages {
+    another_email: string;
+    another_img:   null;
+    my_email:      string;
+    messages:      Message[];
+}
+
+export interface ResponseMessage {
+    data:    Message;
+    message: string;
+}
+
+export interface SendMessage {
+    content: string;
+    type: string; // message, png, pegj, pdf
+    send_by : string;
+    send_to: string;
+    filename?: string | null;
 }

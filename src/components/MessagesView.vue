@@ -1,14 +1,11 @@
 <script setup lang="ts">
     import RowMessageView from './RowMessageView.vue';
-    import type { DataMessages, Message } from "@/types/Interfaces";
+    import type { DataMessages } from "@/types/Interfaces";
 
     const props = defineProps<{
         chat : DataMessages
     }>();
 
-    function getMessages() {
-        return props.chat.messages.reverse()
-    }
 </script>
 
 <template>
@@ -25,7 +22,7 @@
             </div>
         </div>
         <row-message-view
-            v-for="row in getMessages()"
+            v-for="row in props.chat.messages"
             :message="row"
             >
         </row-message-view>
