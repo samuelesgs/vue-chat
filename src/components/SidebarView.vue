@@ -4,7 +4,6 @@
 import CardChatView from './CardChatView.vue';
     const user = getUser();
 
-
     defineProps(
         { array : [Number]}
     );
@@ -27,6 +26,11 @@ import CardChatView from './CardChatView.vue';
         return data['name'] ?? data['email'];
     }
 
+    function closeSession() {
+        localStorage.clear();
+        window.location.href = "/";
+    }
+
 </script>
 
 <template>
@@ -44,7 +48,7 @@ import CardChatView from './CardChatView.vue';
                                 />
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <li @click="selectionProfile"><p class="dropdown-item">Perfil</p></li>
-                                    <li @click=""><p class="dropdown-item">Cerrar sesion</p></li>
+                                    <li @click="closeSession"><p class="dropdown-item">Cerrar sesion</p></li>
                                 </ul>
                         </div>
                     </div>
