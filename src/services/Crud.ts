@@ -3,6 +3,8 @@ import axios from "axios";
 class CrudService {
     
     url : string = "http://localhost:3000/";
+    email : string | null = localStorage.getItem('email') ?? null;
+
 
     async login( email : string, password : string) :Promise<any> {
         return await this.sendRequestPostNotAuth("auth/login", {email : email, password : password});
@@ -12,9 +14,16 @@ class CrudService {
         return await this.sendRequestPostNotAuth("auth/register", {email : email, password : password});
     }
 
+    async syncMessages(){
+        return await this.sendRequestGetNotAuth("messages/sync/", `email=${this.email}`);
+    }
+
     sendRequestPostNotAuth(section : string, params : {}) : any {
         return axios.post(`${this.url}${section}`, params);
     }
-}
 
+    sendRequestGetNotAuth(section : string, complementUrl : string) {
+        return axios.get(`${this.url}${section}?${complementUrl}`);
+    }
+}
 export default new CrudService();

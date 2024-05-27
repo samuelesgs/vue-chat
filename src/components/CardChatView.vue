@@ -1,11 +1,14 @@
 <script setup lang="ts">
-    defineProps({
-        /* row : {} */
-        property : Boolean,
-        user_send : String,
-        user_to : String,
-        message : String
-    });
+    import type { DataMessages } from "@/types/Interfaces";
+
+    const props = defineProps<{
+        chat : DataMessages
+    }>();
+
+    function getLastMessage() {
+        console.log(props.chat.messages[props.chat.messages.length - 1]);
+        return props.chat.messages[0].content;
+    }
 </script>
 
 
@@ -20,9 +23,9 @@
             </div>
             <div class="col ms-2 mt-1">
                 <h5 class="col-12 no-space">
-                    {{ user_send }}
+                    {{ props.chat?.another_email }}
                 </h5>
-                <p class="no-space">Last message</p>
+                <p class="no-space">{{getLastMessage()}}</p>
             </div>
         </div>
     </div>

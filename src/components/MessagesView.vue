@@ -1,18 +1,17 @@
 <script setup lang="ts">
-    import { type Chats } from '@/types/Interfaces';
     import RowMessageView from './RowMessageView.vue';
+    import type { DataMessages, Message } from "@/types/Interfaces";
 
     const props = defineProps<{
-        messages : Chats[]
-    }>()
-
+        chat : DataMessages
+    }>();
 </script>
 
 <template>
     <div class="row container-message-size overflow-auto">
         <div class="row white-text center-vertical">
             <div class="col-9">
-                <h1>Nombre del chat</h1>
+                <h1>{{ props.chat.another_email }}</h1>
             </div>
             <div class="col">
                 <div class="row">
@@ -22,11 +21,8 @@
             </div>
         </div>
         <row-message-view
-            v-for="row in props.messages"
-            :property="row.property"
-            :user_send="row.user_send"
-            :user_to="row.user_to"
-            :message="row.message"
+            v-for="row in props.chat.messages"
+            :message="row"
             >
         </row-message-view>
     </div>

@@ -1,12 +1,14 @@
 
 <script setup lang="ts">
     import { ref } from 'vue';
-import CardChatView from './CardChatView.vue';
+    import CardChatView from './CardChatView.vue';
+    import type { DataMessages } from "@/types/Interfaces";
     const user = getUser();
 
-    defineProps(
-        { array : [Number]}
-    );
+    const props = defineProps<{
+        /* row : {} */
+        chats : DataMessages[]
+    }>();
 
     const isSectionProfile = ref(false);
 
@@ -17,7 +19,9 @@ import CardChatView from './CardChatView.vue';
         emit('isSectionProfile', isSectionProfile.value)
     }
 
-    function selectionChat(row : any) {
+    function selectionChat(row : DataMessages) {
+        console.log("selectionChat",row);
+        
         emit('selectionChat', row)
     }
 
@@ -68,14 +72,14 @@ import CardChatView from './CardChatView.vue';
             >
             <div
                 class="col-12 ps-2"
-                v-for="row in array"
+                v-for="row in props.chats"
                 >
                 <div
                     @click="selectionChat(row)"
                     class="col-12"
                     >
                     <card-chat-view
-                        :row="row"
+                        :chat="row"
                         >
                     </card-chat-view>
                 </div>

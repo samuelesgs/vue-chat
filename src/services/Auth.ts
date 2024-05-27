@@ -5,7 +5,7 @@ class AuthService {
     async login( email : string, password : string) : Promise<any> {
         return new Promise((resolve, reject) => {
             CrudService.login(email, password).then(response => {
-                const responseData : ResponseSync = response.data;
+                const responseData : ResponseUser = response.data;
                 if (responseData.status == 1) {
                     this.setStorage(responseData.data);
                     resolve(true);
@@ -19,7 +19,7 @@ class AuthService {
     async create(email : string, password : string, name : string) : Promise<any> {
         return new Promise((resolve, reject) => {
             CrudService.createUser(email, password).then(response => {
-                const responseData : ResponseSync = response.data;
+                const responseData : ResponseUser = response.data;
                 if (responseData.status == 1) {
                     resolve(true);
                 } else {
@@ -36,7 +36,7 @@ class AuthService {
     }
 }
 
-export interface ResponseSync {
+export interface ResponseUser {
     data:    User;
     status:  number;
     message: string;
