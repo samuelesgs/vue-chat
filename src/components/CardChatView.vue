@@ -6,7 +6,6 @@
     }>();
 
     function getLastMessage() {
-        console.log(props.chat.messages[props.chat.messages.length - 1]);
         return props.chat.messages[0].content;
     }
 </script>

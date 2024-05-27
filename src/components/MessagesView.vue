@@ -5,11 +5,15 @@
     const props = defineProps<{
         chat : DataMessages
     }>();
+
+    function getMessages() {
+        return props.chat.messages.reverse()
+    }
 </script>
 
 <template>
     <div class="row container-message-size overflow-auto">
-        <div class="row white-text center-vertical">
+        <div class="row white-text center-vertical bg-header">
             <div class="col-9">
                 <h1>{{ props.chat.another_email }}</h1>
             </div>
@@ -21,7 +25,7 @@
             </div>
         </div>
         <row-message-view
-            v-for="row in props.chat.messages"
+            v-for="row in getMessages()"
             :message="row"
             >
         </row-message-view>

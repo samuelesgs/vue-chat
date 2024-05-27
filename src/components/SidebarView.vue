@@ -7,7 +7,7 @@
 
     const props = defineProps<{
         /* row : {} */
-        chats : DataMessages[]
+        chats : DataMessages[] | null
     }>();
 
     const isSectionProfile = ref(false);
@@ -72,6 +72,7 @@
             >
             <div
                 class="col-12 ps-2"
+                v-if="props.chats"
                 v-for="row in props.chats"
                 >
                 <div
