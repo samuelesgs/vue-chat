@@ -28,6 +28,7 @@ export interface DataMessages {
 
 export interface ResponseMessage {
     data:    Message;
+    status : number;
     message: string;
 }
 

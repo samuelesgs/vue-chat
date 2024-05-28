@@ -1,13 +1,26 @@
 
 <script setup lang="ts">
 
-  defineProps(
+  const props = defineProps(
     {
       title : String,
       body_message : String,
       show_button_saved : Boolean
     }
   );
+
+  const emit = defineEmits(['confirm']);
+
+  function setConfirm() {
+    emit('confirm', true);
+  }
+
+  function printProps() {
+    console.log(props);
+    
+  }
+
+  printProps()
 </script>
 
 <template>
@@ -34,8 +47,9 @@
         <div class="modal-header">
           <h1
             class="modal-title fs-5 white-text"
-            >{{title}}</h1>
+            >{{props.title}}</h1>
           <button
+            id="button-close-modal-message"
             type="button"
             class="btn-close btn-close-white"
             data-bs-dismiss="modal"
@@ -44,7 +58,7 @@
           </button>
         </div>
         <div class="modal-body">
-          {{ body_message }}
+          {{ props.body_message }}
         </div>
         <div class="modal-footer">
           <button
@@ -56,8 +70,9 @@
           <button
             type="button"
             class="btn btn-primary"
-            v-if="show_button_saved"
-            >Save changes
+            @click="setConfirm"
+            v-if="props.show_button_saved"
+            >Guardar cambios
           </button>
         </div>
       </div>

@@ -35,12 +35,16 @@ class CrudService {
         return axios.get(`${this.url}${section}?${complementUrl}`);
     }
 
-   async sendMessageFile(formData : SendMessage) {
-        const response = await axios.post('https://your-api-endpoint.com/upload', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
+    async downloadFile(fileName : string) {
+        return await axios({
+            url: `http://localhost:3000/messages/download/?filename=${fileName}`,
+            method: 'GET',
+            responseType: 'blob',
+          });
+    }
+
+    async delete(section : string, complementUrl : string) {
+        return axios.delete(`${this.url}${section}?${complementUrl}`);
     }
 }
 export default new CrudService();

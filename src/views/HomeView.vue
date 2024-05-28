@@ -5,6 +5,7 @@
     import SideBarView from '@/components/SidebarView.vue'
     import ProfileView from '@/views/ProfileView.vue'
     import MessagesService from '@/services/Messages';
+
     import type { DataMessages, Message, NewMessage, ResponseMessage, SendMessage } from "@/types/Interfaces";
 
     import { sendMessage, socket } from "@/socket";
@@ -14,7 +15,7 @@
 
     const chats : Ref<DataMessages[] | null> = ref([]);
 
-    const email = localStorage.getItem('email');
+    const email = localStorage.getItem('email')!;
 
     let message = ref('');
 
@@ -69,9 +70,9 @@
                 const params : SendMessage = {
                     content : message.value,
                     type : type,
-                    send_by : email!,
+                    send_by :  localStorage.getItem('email')!,
                     send_to : chatSelection.value!.another_email,
-                }
+                };
                 sendMessage(params);
                 fileMessage.value = null;
                 message.value = '';
@@ -79,9 +80,15 @@
         }
     }
 
+    const bodyBlock : Ref<string | null> = ref(null);
+
     socket.on('message', (response : ResponseMessage) => {
-        pushInformation(response.data);
-        scrollMessage();
+        if (response.data) {
+            pushInformation(response.data);
+            scrollMessage();
+        } else if (response.status == 2) {
+            bodyBlock.value = response.message;
+        }
     });
 
     function pushInformation(data : Message) {
@@ -121,6 +128,7 @@
     const setSelectionChat = (chat : DataMessages) => {
         isSelectionProfile.value = false;
         chatSelection.value = chat;
+        bodyBlock.value = null;
         scrollMessage();
     }
 
@@ -148,7 +156,6 @@
             if(div) {
                 const lastDiv = div.lastElementChild;
                 if(lastDiv) {
-                    console.log("scroll");
                     lastDiv.scrollIntoView({behavior:'smooth', block: 'end'});
                 }
             }
@@ -156,7 +163,7 @@
     }
     
     syncMessage();
-    isLoggin();    
+    isLoggin();
 </script>
 
 <template>
@@ -177,6 +184,7 @@
                     <messages-view
                         v-if="!isSelectionProfile && chatSelection"
                         :chat="chatSelection"
+                        :body-block="bodyBlock"
                         >
                     </messages-view>
                     <div
