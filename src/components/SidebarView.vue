@@ -15,6 +15,8 @@
 
     const emit = defineEmits(['isSectionProfile','selectionChat', 'newChat']);
 
+    const img = ref(null);
+
     function selectionProfile() {
         isSectionProfile.value = !isSectionProfile.value;
         emit('isSectionProfile', isSectionProfile.value)
@@ -25,7 +27,7 @@
     }
 
     function getUser() {
-        const data = JSON.parse(localStorage.getItem('user_session')!)
+        const data = JSON.parse(localStorage.getItem('user_session')!);
         return data['name'] ?? data['email'];
     }
 
@@ -43,6 +45,13 @@
             emit('newChat',data);
         }
     }
+
+    function urlImage() {
+        const imgSession = JSON.parse(localStorage.getItem('user_session')!)['img'];
+        img.value = imgSession;
+    }
+
+    urlImage();
 </script>
 
 <template>
@@ -81,9 +90,15 @@
                     </div>
                 </div>
                 <div class="col-12 text-center">
-                    <!-- :src="`@/assets/images/profile.png`" -->
+                    <!-- :src="img ? `http://localhost:3000/imgUsers/${img}` : '../assets/images/profile.png'" -->
                     <img
-                        src="http://localhost:3000/imgUsers/1716776884811.png"
+                        v-if="!img"
+                        src="@/assets/images/profile.png"
+                        class="img-icon-profile"
+                        />
+                    <img
+                        v-if="img"
+                        :src="`http://localhost:3000/imgUsers/${img}`"
                         class="img-icon-profile"
                         />
                     <h3 class="mt-2">{{user}}</h3>
