@@ -25,10 +25,6 @@ import { io } from "socket.io-client";
     state.connected = false;
   });
   
-export function sendMessage(params : any) {
-    socket.emit('message',params);
-  }
-
-  export function sendRequestFile(params : any) {
+  export function sendMessage(params : any) {
     socket.emit('message', params);
   }

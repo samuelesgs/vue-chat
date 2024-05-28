@@ -7,7 +7,7 @@
     import MessagesService from '@/services/Messages';
     import type { DataMessages, Message, NewMessage, ResponseMessage, SendMessage } from "@/types/Interfaces";
 
-    import { sendMessage, socket, sendRequestFile } from "@/socket";
+    import { sendMessage, socket } from "@/socket";
 
     socket.connect();
 
@@ -17,7 +17,7 @@
 
     let message = ref('');
 
-    const fileMessage = ref(null);
+    let fileMessage = ref(null);
 
     const isSelectionProfile = ref(false);
 
@@ -37,18 +37,22 @@
         }
     }
 
-    function verifyParams(type : string) {
+    async function verifyParams(type : string) {
         if (!message.value && !fileMessage.value) {
             console.log("not send");
         } else {
             if (fileMessage.value) {
+                
                 const formData = new FormData();
                 formData.append('file', fileMessage.value);
-                formData.append('emailSendTo', localStorage.getItem('email')!);
-                formData.append('emailSendBy', chatSelection.value!.another_email);
+                formData.append('emailSendBy', localStorage.getItem('email')!);
+                formData.append('emailSendTo', chatSelection.value!.another_email);
                 formData.append('messageContent', message.value);
-                sendRequestFile(formData);
-                
+                MessagesService.sendFile(formData).finally( () => {
+                    fileMessage.value = null;
+                    message.value = '';
+                });
+
             } else if (type == "message") {
                 const params : SendMessage = {
                     content : message.value,
@@ -57,6 +61,8 @@
                     send_to : chatSelection.value!.another_email,
                 }
                 sendMessage(params);
+                fileMessage.value = null;
+                message.value = '';
             }
         }
     }

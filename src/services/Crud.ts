@@ -23,6 +23,10 @@ class CrudService {
         return await this.sendRequestGetNotAuth(section, complementUrl);
     }
 
+    async post(section : string, params : any) {
+        return await this.sendRequestPostNotAuth(section, params);
+    }
+
     sendRequestPostNotAuth(section : string, params : {}) : any {
         return axios.post(`${this.url}${section}`, params);
     }
