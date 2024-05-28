@@ -7,6 +7,7 @@ import RowMessageView from './RowMessageView.vue';
         chat : DataMessages
     }>();
 
+    
     function orderList() {
         props.chat.messages = props.chat.messages.sort((a,b) => {
             const dateA = moment(a.datetime);
@@ -16,7 +17,6 @@ import RowMessageView from './RowMessageView.vue';
     }
 
     orderList();
-
 </script>
 
 <template>
@@ -32,11 +32,13 @@ import RowMessageView from './RowMessageView.vue';
                 </div>
             </div>
         </div>
-        <row-message-view
-            v-for="row in props.chat.messages"
-            :message="row"
-            >
-        </row-message-view>
+        <div id="conteiner-messages">
+            <row-message-view
+                v-for="row in props.chat.messages"
+                :message="row"
+                >
+            </row-message-view>
+        </div>
     </div>    
 </template>
 

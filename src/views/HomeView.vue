@@ -8,6 +8,7 @@
     import type { DataMessages, Message, NewMessage, ResponseMessage, SendMessage } from "@/types/Interfaces";
 
     import { sendMessage, socket } from "@/socket";
+import moment from 'moment';
 
     socket.connect();
 
@@ -26,9 +27,21 @@
     function syncMessage() {
         MessagesService.sync().then(_ => {
             chats.value = MessagesService.getChats();
+            setLastMessage()
         }, reject => {
             console.log(reject);
         });
+    }
+
+    function setLastMessage() {
+        for (const chat of chats.value!) {
+            const maxDatetime = chat.messages.reduce((maxDate, message) => {
+                const messageDatetime = moment(message.datetime);
+                return messageDatetime.isAfter(maxDate) ? messageDatetime : maxDate;
+            }, moment(chat.messages[0].datetime));
+            const message = chat.messages.find(row => moment(row.datetime).format('YYYY-MM-DD HH:mm:ss') == maxDatetime.format('YYYY-MM-DD HH:mm:ss'));
+            chat.lastMessage = message;
+        }
     }
 
     function isLoggin() {
@@ -42,7 +55,6 @@
             console.log("not send");
         } else {
             if (fileMessage.value) {
-                
                 const formData = new FormData();
                 formData.append('file', fileMessage.value);
                 formData.append('emailSendBy', localStorage.getItem('email')!);
@@ -68,13 +80,15 @@
     }
 
     socket.on('message', (response : ResponseMessage) => {
-        pushInformation(response.data)
+        pushInformation(response.data);
+        scrollMessage();
     });
 
     function pushInformation(data : Message) {
         const checkChats = chats.value!.find(row => row.another_email == data.send_by || row.another_email == data.send_to);
         if (checkChats) {
             checkChats.messages.push(data);
+            orderChats(checkChats);
         } else {
             const chat : DataMessages = {
                 another_email : email == data.send_by ? data.send_to : data.send_by,
@@ -87,12 +101,14 @@
             } else {
                 chats.value = [chat];
             }
+            orderChats(chat);
         }
-        orderChats();
     }
 
-    function orderChats() {
-        
+    function orderChats(chat : any) {
+        chats.value = chats.value!.filter(row => row.another_email != chat.another_email);
+        chats.value.unshift(chat);
+        setLastMessage();
     }
 
     // Lógica adicional para manejar el evento de clic en el mensaje
@@ -104,7 +120,8 @@
     //chatSelection enviar los mensajes del chat seleccionado
     const setSelectionChat = (chat : DataMessages) => {
         isSelectionProfile.value = false;
-        chatSelection.value = chat
+        chatSelection.value = chat;
+        scrollMessage();
     }
 
     function newChat(data : NewMessage) {
@@ -124,9 +141,22 @@
     function uploadFile(event :any) {
         fileMessage.value = event.target.files[0];
     }
+
+    async function scrollMessage() {
+        setTimeout(() => {
+            const div = document.getElementById("conteiner-messages");
+            if(div) {
+                const lastDiv = div.lastElementChild;
+                if(lastDiv) {
+                    console.log("scroll");
+                    lastDiv.scrollIntoView({behavior:'smooth', block: 'end'});
+                }
+            }
+        }, 100);
+    }
     
     syncMessage();
-    isLoggin();
+    isLoggin();    
 </script>
 
 <template>

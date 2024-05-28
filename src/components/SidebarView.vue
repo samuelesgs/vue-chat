@@ -111,8 +111,8 @@
         </div>
         <modal-add-chat-view
             @newChat="setDataNewMessage"
-            ></modal-add-chat-view>
-
+            >
+        </modal-add-chat-view>
     </div>
 </template>
 

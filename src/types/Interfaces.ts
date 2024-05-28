@@ -2,6 +2,7 @@ export default interface Login {
     email: string;
     password: string;
 }
+
 export interface Message {
     _id:       string;
     content:   string;
@@ -22,6 +23,7 @@ export interface DataMessages {
     another_img:   null;
     my_email:      string;
     messages:      Message[];
+    lastMessage?: Message;
 }
 
 export interface ResponseMessage {
