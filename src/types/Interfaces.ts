@@ -30,7 +30,7 @@ export interface ResponseMessage {
 }
 
 export interface SendMessage {
-    content: string;
+    content?: string;
     type: string; // message, png, pegj, pdf
     send_by : string;
     send_to: string;

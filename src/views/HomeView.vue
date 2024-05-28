@@ -7,7 +7,7 @@
     import MessagesService from '@/services/Messages';
     import type { DataMessages, Message, NewMessage, ResponseMessage, SendMessage } from "@/types/Interfaces";
 
-    import { sendMessage, socket } from "@/socket";
+    import { sendMessage, socket, sendRequestFile } from "@/socket";
 
     socket.connect();
 
@@ -16,6 +16,8 @@
     const email = localStorage.getItem('email');
 
     let message = ref('');
+
+    const fileMessage = ref(null);
 
     const isSelectionProfile = ref(false);
 
@@ -36,10 +38,18 @@
     }
 
     function verifyParams(type : string) {
-        if (!message.value) {
+        if (!message.value && !fileMessage.value) {
             console.log("not send");
         } else {
-            if (type == "message") {
+            if (fileMessage.value) {
+                const formData = new FormData();
+                formData.append('file', fileMessage.value);
+                formData.append('emailSendTo', localStorage.getItem('email')!);
+                formData.append('emailSendBy', chatSelection.value!.another_email);
+                formData.append('messageContent', message.value);
+                sendRequestFile(formData);
+                
+            } else if (type == "message") {
                 const params : SendMessage = {
                     content : message.value,
                     type : type,
@@ -48,8 +58,6 @@
                 }
                 sendMessage(params);
             }
-            
-            /* messages.value.push(chatMessage); */
         }
     }
 
@@ -74,7 +82,6 @@
                 chats.value = [chat];
             }
         }
-
         orderChats();
     }
 
@@ -103,6 +110,14 @@
         };
         sendMessage(params);
     }
+
+    function clickFile() {
+        document.getElementById('input-file')!.click();
+    }
+
+    function uploadFile(event :any) {
+        fileMessage.value = event.target.files[0];
+    }
     
     syncMessage();
     isLoggin();
@@ -111,6 +126,7 @@
 <template>
     <div class="col-12 overflow-hidden">
         <div class="row">
+            <input type="file" id="input-file" @change="uploadFile" hidden>
             <side-bar-view
                 :chats="chats"
                 class="bg-font no-space col-3"
@@ -132,6 +148,7 @@
                         >
                         <div class="col flex-end  no-space">
                             <img
+                                @click="clickFile"
                                 class="mt-3 size-img-send p-1 me-2"
                                 src="@/assets/images/file.png"
                                 />
@@ -149,6 +166,16 @@
                                 class="mt-3 size-img-send p-1 ms-2"
                                 src="@/assets/images/send.png"
                                 />                            
+                        </div>
+                    </div>
+                    <div class="row text-center white-text mt-3" v-if="fileMessage">
+                        <div class="col no-space">
+                            <p>
+                                <img
+                                    src="@/assets/images/file.png"
+                                    class="p-1 me-2 file-send"
+                                    /> {{fileMessage != null ? fileMessage['name'] : ''}}
+                            </p>
                         </div>
                     </div>
                     <profile-view
@@ -194,12 +221,18 @@
         border-radius: 100%;
     }
 
+    .file-send {
+        height: 5vh;
+        width: 5vh;
+    }
+
     .input-text-style {
         background-color: #323232;
         border: 1px;
         border-color: #2E95A7;
         color: white;
     }
+    
 
     .input-text-style::placeholder {
         background-color: #323232;

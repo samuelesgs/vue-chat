@@ -28,3 +28,7 @@ import { io } from "socket.io-client";
 export function sendMessage(params : any) {
     socket.emit('message',params);
   }
+
+  export function sendRequestFile(params : any) {
+    socket.emit('message', params);
+  }

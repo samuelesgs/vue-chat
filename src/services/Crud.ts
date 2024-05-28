@@ -1,3 +1,4 @@
+import type { SendMessage } from "@/types/Interfaces";
 import axios from "axios";
 
 class CrudService {
@@ -28,6 +29,14 @@ class CrudService {
 
     sendRequestGetNotAuth(section : string, complementUrl : string) {
         return axios.get(`${this.url}${section}?${complementUrl}`);
+    }
+
+   async sendMessageFile(formData : SendMessage) {
+        const response = await axios.post('https://your-api-endpoint.com/upload', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
     }
 }
 export default new CrudService();
