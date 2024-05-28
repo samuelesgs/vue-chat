@@ -62,9 +62,11 @@
                     <h3 class="col-4 white-text">Chat</h3>
                     <div class="offset-3 col">
                         <div class="row offset-1">
-                            <div class="col-3 text-end">
+                            <div
+                                class="col-5"
+                                @click="addChat"
+                                >
                                 <img
-                                    @click="addChat"
                                     src="@/assets/images/message.png"
                                     class="img-icon-settings text-end"
                                     />
@@ -72,7 +74,7 @@
                             
                         <div
                             id="dropdownMenuButton"
-                            class="col-8 position-settings dropdown-toggle pe-3"
+                            class="col-7 position-settings dropdown-toggle pe-3"
                             data-bs-toggle="dropdown"
                             aria-expanded="false"
                             >

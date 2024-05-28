@@ -17,6 +17,10 @@
     const titleMessage = ref('');
     const bodyMessage = ref('');
     const ShowButtonMessage = ref(false);
+
+    const search = ref('');
+
+    const messages : Ref<Message[] | null> = ref(null);
     
     function orderList() {
         props.chat.messages = props.chat.messages.sort((a,b) => {
@@ -65,6 +69,22 @@
         document.getElementById('button-close-modal-message')!.click()
     }
 
+    function getMessages() {
+        if (search.value) {
+            messages.value = props.chat.messages.filter(message =>
+                message.content.toLowerCase().includes(search.value.toLowerCase())
+            ); 
+        } else {
+            messages.value = props.chat.messages;
+        }
+    }
+
+    function exeSearch() {
+        getMessages();    
+    }
+
+    getMessages();
+
     orderList();
 </script>
 
@@ -85,10 +105,29 @@
                     <p class="btn btn-danger me-2 col" v-if="bodyBlock">{{ bodyBlock }}</p>
                 </div>
             </div>
+            <div class="col-12 mb-3">
+                <div class="row  center-vertical">
+                    <div class="col-10 ">
+                        <input
+                            type="text"
+                            class="form-control input-text-style no-space p-2"
+                            placeholder="Buscar mensaje"
+                            v-model="search"
+                            />
+                    </div>
+                    <div class="col">
+                        <button
+                            @click="exeSearch()"
+                            class="btn btn-success"
+                            >Buscar
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
         <div id="conteiner-messages" class="array-message-size overflow-auto">
             <row-message-view
-                v-for="row in props.chat.messages"
+                v-for="row in messages"
                 :message="row"
                 @selectionMessage="setSelectionMessage"
                 >
@@ -119,6 +158,6 @@
     
     .array-message-size {
         min-height: 30vh !important;
-        max-height: 60vh !important;
+        max-height: 55vh !important;
     }
 </style>
