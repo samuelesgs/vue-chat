@@ -37,7 +37,7 @@ import RowMessageView from './RowMessageView.vue';
             :message="row"
             >
         </row-message-view>
-    </div>
+    </div>    
 </template>
 
 <style>

@@ -5,7 +5,7 @@
     import SideBarView from '@/components/SidebarView.vue'
     import ProfileView from '@/views/ProfileView.vue'
     import MessagesService from '@/services/Messages';
-    import type { DataMessages, Message, ResponseMessage, SendMessage } from "@/types/Interfaces";
+    import type { DataMessages, Message, NewMessage, ResponseMessage, SendMessage } from "@/types/Interfaces";
 
     import { sendMessage, socket } from "@/socket";
 
@@ -74,6 +74,12 @@
                 chats.value = [chat];
             }
         }
+
+        orderChats();
+    }
+
+    function orderChats() {
+        
     }
 
     // Lógica adicional para manejar el evento de clic en el mensaje
@@ -87,6 +93,16 @@
         isSelectionProfile.value = false;
         chatSelection.value = chat
     }
+
+    function newChat(data : NewMessage) {
+        const params : SendMessage = {
+            content : data.message,
+            type : 'message',
+            send_by : email!,
+            send_to : data.send_to,
+        };
+        sendMessage(params);
+    }
     
     syncMessage();
     isLoggin();
@@ -98,6 +114,7 @@
             <side-bar-view
                 :chats="chats"
                 class="bg-font no-space col-3"
+                @new-chat="newChat"
                 @is-section-profile="setSelectionProfile"
                 @selection-chat="setSelectionChat"
                 >
@@ -134,12 +151,15 @@
                                 />                            
                         </div>
                     </div>
-                    <profile-view v-if="isSelectionProfile">
+                    <profile-view
+                        v-if="isSelectionProfile">
                     </profile-view>
                 </div>
             </div>
         </div>
+        
     </div>
+
 </template>
 
 

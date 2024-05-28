@@ -2,16 +2,6 @@ export default interface Login {
     email: string;
     password: string;
 }
-
-export default interface User {
-    _id:       string;
-    email:     string;
-    password:  string;
-    createdAt: Date;
-    updatedAt: Date;
-    __v:       number;
-};
-
 export interface Message {
     _id:       string;
     content:   string;
@@ -45,4 +35,26 @@ export interface SendMessage {
     send_by : string;
     send_to: string;
     filename?: string | null;
+}
+
+export interface NewMessage {
+    send_to : string;
+    message : string;
+}
+
+export interface ResponseFindUser {
+    message: string;
+    data:    User;
+    status:  number;
+}
+
+export interface User {
+    _id:       string;
+    email:     string;
+    password:  string;
+    img:       null;
+    id_socket: string;
+    createdAt: Date;
+    updatedAt: Date;
+    __v:       number;
 }

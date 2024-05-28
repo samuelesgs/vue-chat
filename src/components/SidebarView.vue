@@ -2,7 +2,8 @@
 <script setup lang="ts">
     import { ref } from 'vue';
     import CardChatView from './CardChatView.vue';
-    import type { DataMessages } from "@/types/Interfaces";
+    import type { DataMessages, NewMessage } from "@/types/Interfaces";
+    import ModalAddChatView from './modals/ModalAddChatView.vue'
     const user = getUser();
 
     const props = defineProps<{
@@ -12,7 +13,7 @@
 
     const isSectionProfile = ref(false);
 
-    const emit = defineEmits(['isSectionProfile','selectionChat']);
+    const emit = defineEmits(['isSectionProfile','selectionChat', 'newChat']);
 
     function selectionProfile() {
         isSectionProfile.value = !isSectionProfile.value;
@@ -33,6 +34,15 @@
         window.location.href = "/";
     }
 
+    function addChat() {
+        document.getElementById('button-open-modal-add')!.click();
+    }
+
+    function setDataNewMessage(data : NewMessage) {
+        if (data.send_to && data.message) {
+            emit('newChat',data);
+        }
+    }
 </script>
 
 <template>
@@ -41,8 +51,22 @@
             <div class="col-12 overflow-hidden header-style">
                 <div class="row mt-2 ps-3 pe-2">
                     <h3 class="col-4 white-text">Chat</h3>
-                    <div class="offset-5 col">
-                        <div class="col-12 position-settings dropdown-toggle pe-3" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+                    <div class="offset-3 col">
+                        <div class="row offset-1">
+                            <div class="col-3 text-end">
+                                <img
+                                    @click="addChat"
+                                    src="@/assets/images/message.png"
+                                    class="img-icon-settings text-end"
+                                    />
+                            </div>
+                            
+                        <div
+                            id="dropdownMenuButton"
+                            class="col-8 position-settings dropdown-toggle pe-3"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                            >
                         <!-- obtener foto y replazarla -->
                             <img
                                 src="@/assets/images/settings.png"
@@ -52,6 +76,7 @@
                                     <li @click="selectionProfile"><p class="dropdown-item">Perfil</p></li>
                                     <li @click="closeSession"><p class="dropdown-item">Cerrar sesion</p></li>
                                 </ul>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -84,6 +109,10 @@
                 </div>
             </div>
         </div>
+        <modal-add-chat-view
+            @newChat="setDataNewMessage"
+            ></modal-add-chat-view>
+
     </div>
 </template>
 

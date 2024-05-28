@@ -18,6 +18,10 @@ class CrudService {
         return await this.sendRequestGetNotAuth("messages/sync/", `email=${this.email}`);
     }
 
+    async get(section : string, complementUrl : string) {
+        return await this.sendRequestGetNotAuth(section, complementUrl);
+    }
+
     sendRequestPostNotAuth(section : string, params : {}) : any {
         return axios.post(`${this.url}${section}`, params);
     }
