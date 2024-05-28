@@ -81,8 +81,9 @@
                     </div>
                 </div>
                 <div class="col-12 text-center">
+                    <!-- :src="`@/assets/images/profile.png`" -->
                     <img
-                        src="@/assets/images/profile.png"
+                        src="http://localhost:3000/imgUsers/1716776884811.png"
                         class="img-icon-profile"
                         />
                     <h3 class="mt-2">{{user}}</h3>

@@ -20,7 +20,7 @@ import RowMessageView from './RowMessageView.vue';
 </script>
 
 <template>
-    <div class="row container-message-size overflow-auto">
+    <div class="row container-message-size">
         <div class="row white-text center-vertical bg-header">
             <div class="col-9">
                 <h1>{{ props.chat.another_email }}</h1>
@@ -28,11 +28,10 @@ import RowMessageView from './RowMessageView.vue';
             <div class="col">
                 <div class="row">
                     <button class="btn btn-danger me-2 col">Bloquear</button>
-                    <button class="btn btn-secondary me-2 col white-text">Eliminar</button>
                 </div>
             </div>
         </div>
-        <div id="conteiner-messages">
+        <div id="conteiner-messages" class="array-message-size overflow-auto">
             <row-message-view
                 v-for="row in props.chat.messages"
                 :message="row"
@@ -47,5 +46,10 @@ import RowMessageView from './RowMessageView.vue';
     .container-message-size {
         min-height: 65vh;
         max-height: 70vh;
+    } 
+    
+    .array-message-size {
+        min-height: 30vh !important;
+        max-height: 60vh !important;
     }
 </style>

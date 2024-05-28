@@ -8,7 +8,7 @@
     import type { DataMessages, Message, NewMessage, ResponseMessage, SendMessage } from "@/types/Interfaces";
 
     import { sendMessage, socket } from "@/socket";
-import moment from 'moment';
+    import moment from 'moment';
 
     socket.connect();
 
@@ -160,6 +160,7 @@ import moment from 'moment';
 </script>
 
 <template>
+    
     <div class="col-12 overflow-hidden">
         <div class="row">
             <input type="file" id="input-file" @change="uploadFile" hidden>

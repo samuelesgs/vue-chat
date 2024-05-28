@@ -21,7 +21,7 @@
     }
     showError.value = false;
     UserService.findByEmail(email.value).then( response => {
-      returnMessage()
+      /* returnMessage() */
     }, _ => {
       error.value = 'Usuario no encontrado, primero debe registrarse para poder enviarle mensajes';
       showError.value = true;
