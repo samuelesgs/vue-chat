@@ -78,7 +78,6 @@
 
     // Lógica adicional para manejar el evento de clic en el mensaje
     const setSelectionProfile = (selection: boolean) => {
-        console.log('Message clicked:', selection);
         isSelectionProfile.value = selection;
         chatSelection.value = null;
     };

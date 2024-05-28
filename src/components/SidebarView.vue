@@ -20,8 +20,6 @@
     }
 
     function selectionChat(row : DataMessages) {
-        console.log("selectionChat",row);
-        
         emit('selectionChat', row)
     }
 

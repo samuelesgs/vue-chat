@@ -1,10 +1,21 @@
 <script setup lang="ts">
-    import RowMessageView from './RowMessageView.vue';
+    import moment from 'moment';
+import RowMessageView from './RowMessageView.vue';
     import type { DataMessages } from "@/types/Interfaces";
 
     const props = defineProps<{
         chat : DataMessages
     }>();
+
+    function orderList() {
+        props.chat.messages = props.chat.messages.sort((a,b) => {
+            const dateA = moment(a.datetime);
+            const dateB = moment(b.datetime);
+            return dateA.isBefore(dateB) ? -1 : dateA.isAfter(dateB) ? 1 : 0;
+        });
+    }
+
+    orderList();
 
 </script>
 
