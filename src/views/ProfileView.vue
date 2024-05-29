@@ -34,18 +34,24 @@
     <div class="row">
         <div class="col-12 text-center">
             <h4 class="mt-2">Configuraciones en perfil</h4>
-            <img
-                v-if="imgProfile"
-                @click="clickFile"
-                :src="`http://localhost:3000/imgUsers/${imgProfile}`"
-                class="img-icon-profile-2 mt-3"
-                />
-            <img
-                v-if="!imgProfile"
-                @click="clickFile"
-                src="@/assets/images/profile.png"
-                class="img-icon-profile-2 mt-3"
-                />
+            <div class="image-container">
+                <img
+                    src="@/assets/images/dark-settings.png"
+                    class="icon-overlay"
+                    />
+                <img
+                    v-if="imgProfile"
+                    @click="clickFile"
+                    :src="`http://localhost:3000/imgUsers/${imgProfile}`"
+                    class="img-icon-profile-2 mt-3"
+                    />
+                <img
+                    v-if="!imgProfile"
+                    @click="clickFile"
+                    src="@/assets/images/profile.png"
+                    class="img-icon-profile-2 mt-3"
+                    />
+            </div>
         </div>
         <div class="col-12">
             <div class="row center-horizontal mt-4">
@@ -68,5 +74,18 @@
         background-color: #ced4da;
         height: 20vh;
         width: 20vh;
+    }
+
+    .image-container {
+        position: relative;
+        display: inline-block;
+    }
+
+    .icon-overlay {
+        position: absolute;
+        top: 17vh; /* Ajusta la posición según tus necesidades */
+        right: 1vh; /* Ajusta la posición según tus necesidades */
+        width: 5vh; /* Ajusta el tamaño según tus necesidades */
+        height: 5vh; /* Ajusta el tamaño según tus necesidades */
     }
 </style>
