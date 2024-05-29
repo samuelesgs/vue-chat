@@ -25,13 +25,6 @@
 
     const chatSelection : Ref<DataMessages | null> = ref(null);
 
-    function printLocal() {
-        console.log(localStorage);
-        
-    }
-
-    printLocal()
-
     function syncMessage() {
         MessagesService.sync().then(_ => {
             chats.value = MessagesService.getChats();
