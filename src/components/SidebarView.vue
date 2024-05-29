@@ -7,7 +7,6 @@
     const user = getUser();
 
     const props = defineProps<{
-        /* row : {} */
         chats : DataMessages[] | null
     }>();
 
@@ -27,7 +26,7 @@
     }
 
     function getUser() {
-        return  localStorage.getItem('name') ?? localStorage.getItem('email');
+        return localStorage.getItem('name') ?? localStorage.getItem('email');
     }
 
     function closeSession() {
