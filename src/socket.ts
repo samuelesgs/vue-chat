@@ -16,8 +16,6 @@ import { io } from "socket.io-client";
       });
   
     socket.on("connect", () => {
-        console.log("se conecto");
-        
         state.connected = true;
     });
     
