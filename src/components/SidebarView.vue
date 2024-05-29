@@ -17,7 +17,7 @@
     const img : Ref<String | null> = ref(null);
 
     function selectionProfile() {
-        isSectionProfile.value = !isSectionProfile.value;
+        isSectionProfile.value = true;
         emit('isSectionProfile', isSectionProfile.value)
     }
 
@@ -95,11 +95,13 @@
                         v-if="!img"
                         src="@/assets/images/profile.png"
                         class="img-icon-profile"
+                        @click="selectionProfile"
                         />
                     <img
                         v-if="img"
                         :src="`http://localhost:3000/imgUsers/${img}`"
                         class="img-icon-profile"
+                        @click="selectionProfile"
                         />
                     <h3 class="mt-2">{{user}}</h3>
                 </div>
