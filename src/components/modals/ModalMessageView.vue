@@ -58,7 +58,7 @@
             type="button"
             class="btn btn-secondary"
             data-bs-dismiss="modal"
-            >Close
+            >Cerrar
           </button>
           <button
             type="button"

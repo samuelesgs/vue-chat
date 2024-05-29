@@ -36,8 +36,8 @@
     }
 
     function modalConfirmUserBlock() {
-        titleMessage.value = "Confirmacion";
-        bodyMessage.value = "¿Estas seguro de bloquear a este usuario?"
+        titleMessage.value = "Confirmación";
+        bodyMessage.value = "¿Estás seguro de bloquear a este usuario?"
         ShowButtonMessage.value = true;
         openModalMessage();
     }
@@ -91,7 +91,7 @@
     <button id="button-load-messages" @click="getMessages" hidden>ReloadMessages</button>
     <div class="row container-message-size">
         <div class="row white-text center-vertical bg-header">
-            <div class="col-9">
+            <div :class="!bodyBlock ? 'col-9' : 'col-7'">
                 <h1>{{ props.chat.another_email }}</h1>
             </div>
             <div class="col">
@@ -102,7 +102,7 @@
                         class="btn btn-danger me-2 col"
                         >Bloquear
                     </button>
-                    <p class="btn btn-danger me-2 col" v-if="bodyBlock">{{ bodyBlock }}</p>
+                    <p class="btn btn-secondary me-2 col" v-if="bodyBlock">{{ bodyBlock }}</p>
                 </div>
             </div>
             <div class="col-12 mb-3">
@@ -158,6 +158,6 @@
     
     .array-message-size {
         min-height: 30vh !important;
-        max-height: 55vh !important;
+        max-height: 54vh !important;
     }
 </style>

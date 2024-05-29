@@ -85,7 +85,7 @@
                                 />
                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <li @click="selectionProfile"><p class="dropdown-item">Perfil</p></li>
-                                    <li @click="closeSession"><p class="dropdown-item">Cerrar sesion</p></li>
+                                    <li @click="closeSession"><p class="dropdown-item">Cerrar sesión</p></li>
                                 </ul>
                         </div>
                         </div>

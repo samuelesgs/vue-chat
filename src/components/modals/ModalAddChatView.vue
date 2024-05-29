@@ -21,9 +21,15 @@
     }
     showError.value = false;
     UserService.findByEmail(email.value).then( response => {
-      /* returnMessage() */
-    }, _ => {
-      error.value = 'Usuario no encontrado, primero debe registrarse para poder enviarle mensajes';
+      returnMessage()
+    }, (reject  : string ) => {
+      console.log(reject);
+      
+      if (!reject.includes("Failed request create message, details: You have blocked user")) {
+        error.value = 'Usuario no encontrado, primero debe registrarse para poder enviarle mensajes';
+      } else {
+        error.value = reject;
+      }
       showError.value = true;
     });
   }
@@ -80,7 +86,7 @@
         <div class="modal-body">
           <input
             type="email"
-            placeholder="Email"
+            placeholder="Correo"
             class="form-control input-text-style" 
             v-model="email"
             />

@@ -10,7 +10,7 @@ class UserService {
                 if (responseData.status == 1) {
                     resolve(true);
                 } else {
-                    reject(false)
+                    reject(responseData.message)
                 }
             });
         });

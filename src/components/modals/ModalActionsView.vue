@@ -47,7 +47,7 @@
           <div class="modal-header">
             <h1
               class="modal-title fs-5 white-text"
-              >Acciones de selccionar mensaje</h1>
+              >Acciones de seleccionar mensaje</h1>
             <button
               id="button-close-actions"
               type="button"
@@ -69,7 +69,7 @@
               type="button"
               class="btn btn-danger"
               @click="deleteMessage"
-              >Borrar
+              >Eliminar
             </button>
           </div>
         </div>

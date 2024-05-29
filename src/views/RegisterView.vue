@@ -12,9 +12,9 @@
 
     async function verifyParams() {
         modalMessage.value = null;
-        if (!email.value) {
-            setError("Validación formulario", "Ingresa un email");
-        } else if (!password.value) {
+        if (!email.value.trim()) {
+            setError("Validación formulario", "Ingresa un correo");
+        } else if (!password.value.trim()) {
             setError("Validación formulario", "Ingresa la contraseña");
         } else {
             sendRequest()
@@ -22,10 +22,10 @@
     }
     
     function sendRequest() {
-        AuthService.create(email.value, password.value, name.value).then(_ => {
+        AuthService.create(email.value.trim(), password.value.trim(), name.value.trim()).then(_ => {
             window.location.href = "/";
         }, reject => {
-            console.log(reject);
+            setError("Error en el servidor:",reject)
         });
     }
 
@@ -68,7 +68,7 @@
                             <input
                                 class="form-control mb-3 custom-input"
                                 type="email"
-                                placeholder="Email"
+                                placeholder="Correo"
                                 v-model="email"
                                 name = "email"
                                 />
@@ -82,7 +82,7 @@
                             <input
                                 class="form-control custom-input"
                                 type="password"
-                                placeholder="Password"
+                                placeholder="Contraseña"
                                 v-model="password"
                                 name = "password"
                                 />

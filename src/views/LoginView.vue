@@ -13,7 +13,7 @@
     async function verifyParams() {
         modalMessage.value = null;
         if (!email.value) {
-            setError("Validación formulario", "Ingresa un email");
+            setError("Validación formulario", "Ingresa un correo");
         } else if (!password.value) {
             setError("Validación formulario", "Ingresa la contraseña");
         } else {
@@ -25,7 +25,7 @@
         AuthService.login(email.value, password.value).then(_ => {
             window.location.href = "Home";
         }, reject => {
-            setError("Error server", reject);
+            setError("Error en el servidor", reject);
         });
     }
 
@@ -51,7 +51,7 @@
         <div class="card-view row">
             <div class="col-12 text-center">
                 <div class="title">
-                    <h3 class="white-text">Login</h3>
+                    <h3 class="white-text">Inicio de sesión</h3>
                 </div>
                 <div class="body mt-3">
                     <div class="row center-horizontal mb-2">
@@ -59,14 +59,14 @@
                             <input
                                 class="form-control mb-2 custom-input"
                                 type="email"
-                                placeholder="Email"
+                                placeholder="Correo"
                                 v-model="email"
                                 name = "email"
                                 />
                             <input
                                 class="form-control custom-input"
                                 type="password"
-                                placeholder="Password"
+                                placeholder="Contraseña"
                                 v-model="password"
                                 name="password"
                                 />
@@ -77,7 +77,7 @@
                                 <button
                                     @click="verifyParams()"
                                     class="btn btn-primary form-control">
-                                    Iniciar sesion
+                                    Iniciar sesión
                                 </button>
                                 <router-link
                                     to="/register"
