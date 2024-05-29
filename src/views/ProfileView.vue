@@ -82,6 +82,7 @@
                         type="email"
                         class="form-control input-text-style"
                         v-model="email"
+                        disabled
                         />
                 </div>
                 <div class="col-5">
@@ -89,6 +90,7 @@
                         type="text"
                         class="form-control input-text-style"
                         v-model="name"
+                        disabled
                         />
                 </div>
             </div>
