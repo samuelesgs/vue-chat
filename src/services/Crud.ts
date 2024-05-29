@@ -11,8 +11,8 @@ class CrudService {
         return await this.sendRequestPostNotAuth("auth/login", {email : email, password : password});
     }
 
-    async createUser(email : string, password : string) : Promise<any> {
-        return await this.sendRequestPostNotAuth("auth/register", {email : email, password : password});
+    async createUser(email : string, password : string, name : string) : Promise<any> {
+        return await this.sendRequestPostNotAuth("auth/register", {email : email, password : password, name : name});
     }
 
     async syncMessages(){

@@ -18,7 +18,7 @@ class AuthService {
 
     async create(email : string, password : string, name : string) : Promise<any> {
         return new Promise((resolve, reject) => {
-            CrudService.createUser(email, password).then(response => {
+            CrudService.createUser(email, password, name).then(response => {
                 const responseData : ResponseUser = response.data;
                 if (responseData.status == 1) {
                     resolve(true);
@@ -32,7 +32,12 @@ class AuthService {
     setStorage(data : User) {
         localStorage.setItem('email', data.email);
         localStorage.setItem('id', data._id);
-        localStorage.setItem('img', data.img)
+        if (data.name) {
+            localStorage.setItem('name', data.name);            
+        }
+        if (data.img) {
+            localStorage.setItem('img', data.img)
+        }
     }
 }
 
@@ -45,6 +50,7 @@ export interface ResponseUser {
 interface User {
     _id:       string;
     email:     string;
+    name : string;
     password:  string;
     img : string;
     createdAt: Date;

@@ -3,12 +3,8 @@
     import UserService from '@/services/User';
 
     const email = localStorage.getItem('email')!;
-    const password = ref('');
-
     const imgProfile = ref(localStorage.getItem('img'));
-
     const name = ref('')
-
 
     function getName() {
         const nameJson = localStorage.getItem('name');
@@ -21,18 +17,14 @@
         formData.append('file', fileProfile);
         UserService.fileProfile(formData).then(_ => {
             imgProfile.value = localStorage.getItem('img')!;
-            console.log(imgProfile.value);
-            
         }, reject => {
             console.log(reject);
-            
         });
     }
 
     function clickFile() {
         document.getElementById('input-file-profile')!.click();
     }
-
     getName()
 </script>
 
@@ -62,18 +54,6 @@
                 </div>
                 <div class="col-5">
                     <input type="text" class="form-control input-text-style" v-model="name">
-                </div>
-            </div>
-            <div class="row center-horizontal mt-4">
-                <div class="col-5">
-                    <input type="text" class="form-control input-text-style" v-model="password"/>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-11 flex-end mt-4">
-                    <div class="col-5 flex-end">
-                        <button class="btn btn-primary">Guardar</button>
-                    </div>
                 </div>
             </div>
         </div>
