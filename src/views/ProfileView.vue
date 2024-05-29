@@ -1,24 +1,56 @@
 <script setup lang="ts">
     import { ref } from 'vue';
+    import UserService from '@/services/User';
 
     const email = localStorage.getItem('email')!;
     const password = ref('');
 
+    const imgProfile = ref(localStorage.getItem('img'));
+
     const name = ref('')
 
+
     function getName() {
-        const nameJson = JSON.parse(localStorage.getItem('user_session')!)['name'];
+        const nameJson = localStorage.getItem('name');
         name.value = nameJson ?? '';
+    }
+
+    function uploadFile(event :any) {
+        const fileProfile = event.target.files[0];
+        const formData = new FormData();
+        formData.append('file', fileProfile);
+        UserService.fileProfile(formData).then(_ => {
+            imgProfile.value = localStorage.getItem('img')!;
+            console.log(imgProfile.value);
+            
+        }, reject => {
+            console.log(reject);
+            
+        });
+    }
+
+    function clickFile() {
+        document.getElementById('input-file-profile')!.click();
     }
 
     getName()
 </script>
 
 <template>
+
+    <input type="file" id="input-file-profile" @change="uploadFile" hidden>
     <div class="row">
         <div class="col-12 text-center">
             <h4 class="mt-2">Configuraciones en perfil</h4>
             <img
+                v-if="imgProfile"
+                @click="clickFile"
+                :src="`http://localhost:3000/imgUsers/${imgProfile}`"
+                class="img-icon-profile-2 mt-3"
+                />
+            <img
+                v-if="!imgProfile"
+                @click="clickFile"
                 src="@/assets/images/profile.png"
                 class="img-icon-profile-2 mt-3"
                 />
@@ -46,7 +78,6 @@
             </div>
         </div>
     </div>
-    
 </template>
 
 

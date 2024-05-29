@@ -1,6 +1,6 @@
 
 <script setup lang="ts">
-    import { ref } from 'vue';
+    import { ref, type Ref } from 'vue';
     import CardChatView from './CardChatView.vue';
     import type { DataMessages, NewMessage } from "@/types/Interfaces";
     import ModalAddChatView from './modals/ModalAddChatView.vue'
@@ -15,7 +15,7 @@
 
     const emit = defineEmits(['isSectionProfile','selectionChat', 'newChat']);
 
-    const img = ref(null);
+    const img : Ref<String | null> = ref(null);
 
     function selectionProfile() {
         isSectionProfile.value = !isSectionProfile.value;
@@ -27,8 +27,7 @@
     }
 
     function getUser() {
-        const data = JSON.parse(localStorage.getItem('user_session')!);
-        return data['name'] ?? data['email'];
+        return  localStorage.getItem('name') ?? localStorage.getItem('email');
     }
 
     function closeSession() {
@@ -47,7 +46,7 @@
     }
 
     function urlImage() {
-        const imgSession = JSON.parse(localStorage.getItem('user_session')!)['img'];
+        const imgSession = localStorage.getItem('img');
         img.value = imgSession;
     }
 

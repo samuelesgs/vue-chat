@@ -1,5 +1,5 @@
 import CrudService from "@/services/Crud";
-import type { DataMessages, ResponseFindUser } from "@/types/Interfaces";
+import type { DataMessages, ResponseFindUser, User } from "@/types/Interfaces";
 
 class UserService {
     async findByEmail(anotherEmail : string) {
@@ -15,5 +15,28 @@ class UserService {
             });
         });
     }
+
+    async fileProfile(params : any) {
+        return new Promise((resolve, reject) => {
+            console.log(`users/fileProfile/?email=${CrudService.email}`);
+            
+            CrudService.post(`users/fileProfile/?email=${CrudService.email}`, params).then(response => {
+                const responseData : ResponseImgProfile = response.data;
+                console.log(responseData);
+                
+                if (responseData.status == 1) {
+                    localStorage.setItem('img', responseData.data.img!);
+                    resolve(true);
+                } else {
+                    reject(responseData.message)
+                }
+            });
+        });
+    }
+}
+export interface ResponseImgProfile {
+    data:    User;
+    status:   number;
+    message: string;
 }
 export default new UserService();

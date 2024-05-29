@@ -30,9 +30,9 @@ class AuthService {
     }
 
     setStorage(data : User) {
-        localStorage.setItem('user_session', JSON.stringify(data));
         localStorage.setItem('email', data.email);
         localStorage.setItem('id', data._id);
+        localStorage.setItem('img', data.img)
     }
 }
 
@@ -46,6 +46,7 @@ interface User {
     _id:       string;
     email:     string;
     password:  string;
+    img : string;
     createdAt: Date;
     updatedAt: Date;
     __v:       number;
