@@ -14,13 +14,6 @@
   function setConfirm() {
     emit('confirm', true);
   }
-
-  function printProps() {
-    console.log(props);
-    
-  }
-
-  printProps()
 </script>
 
 <template>

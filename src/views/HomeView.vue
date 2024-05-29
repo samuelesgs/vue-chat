@@ -129,6 +129,9 @@
         isSelectionProfile.value = false;
         chatSelection.value = chat;
         bodyBlock.value = null;
+        setTimeout(() => {
+            document.getElementById('button-load-messages')!.click()
+        }, 200)
         scrollMessage();
     }
 

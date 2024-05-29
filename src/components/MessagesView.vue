@@ -61,7 +61,6 @@
     }
 
     function openModalMessage() {
-        console.log("openModalMessage");
         document.getElementById('button-open-modal')!.click();
     }
 
@@ -89,6 +88,7 @@
 </script>
 
 <template>
+    <button id="button-load-messages" @click="getMessages" hidden>ReloadMessages</button>
     <div class="row container-message-size">
         <div class="row white-text center-vertical bg-header">
             <div class="col-9">
